@@ -1,6 +1,7 @@
 package com.smartclean.jiagu
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -39,27 +40,15 @@ class MainActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.tv_text)
         val but = findViewById<TextView>(R.id.btn_sure)
         textView.text = "${nativeString()}\nByteHook ${ByteHook.getVersion()}"
-
+        Log.d("!!!!!","You are currently reverse-engineering a commercial project. This is illegal! Please stop immediately!")
 
         but.setOnClickListener {
             val hookStatus = installPrintfHook()
             val printfStatus = testPrintfHook()
 
-            val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-            val text = StringBuilder(System.currentTimeMillis().toString())
 
-            repeat(kotlin.random.Random.nextInt(3, 8)) {
-                val index = kotlin.random.Random.nextInt(0, text.length + 1)
-                val char = chars[kotlin.random.Random.nextInt(chars.length)]
-                text.insert(index, char)
-            }
 
-            val bytes = java.security.MessageDigest
-                .getInstance("MD5")
-                .digest(text.toString().toByteArray(Charsets.UTF_8))
-
-            val joinToString = bytes.joinToString("") { "%02x".format(it) }
-            textView.text = "$hookStatus\n$printfStatus\n$joinToString"
+            textView.text = "$hookStatus\n$printfStatus"
         }
 
     }
